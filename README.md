@@ -7,7 +7,6 @@
 
 <br><br>
 
-<a href="https://yanshengguc.github.io/smartbuy/"><img src="https://img.shields.io/badge/在线体验-Live%20Demo-brightgreen?style=for-the-badge" alt="demo"></a>
 <a href="https://github.com/yanshengguc/smartbuy/archive/refs/heads/main.zip"><img src="https://img.shields.io/badge/下载源码-Download-blue?style=for-the-badge" alt="download"></a>
 
 </div>
@@ -95,4 +94,3 @@ MIT — 随意使用、修改、分发
 ---
 
 <p align="center">Made with ❤️ for the MiMo 百万亿 Token 创造者激励计划</p>
-
