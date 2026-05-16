@@ -1,0 +1,14 @@
+{
+  "description": "智选助手 - AI购物决策小程序",
+  "appid": "你的小程序AppID",
+  "projectname": "smartbuy-miniapp",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "newFeature": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.6.0"
+}

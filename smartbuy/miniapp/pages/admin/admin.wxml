@@ -1,0 +1,71 @@
+<scroll-view scroll-y class="admin-page">
+  <view class="admin-form">
+    <!-- 密码验证（未验证时） -->
+    <view wx:if="{{!verified}}" class="pwd-section">
+      <text class="section-title">管理端登录</text>
+      <text class="section-desc">请输入管理密码</text>
+      <input class="pwd-input" type="password" value="{{pwdInput}}" placeholder="输入密码" bindinput="onPwdInput"/>
+      <view class="btn-row">
+        <button class="btn-ghost" bindtap="goBack">返回</button>
+        <button class="btn-primary" bindtap="verifyPwd">确认</button>
+      </view>
+    </view>
+
+    <!-- 配置表单（已验证） -->
+    <view wx:else>
+      <view class="admin-header">
+        <text class="section-title">API 配置</text>
+        <button class="btn-ghost small" bindtap="goBack">退出</button>
+      </view>
+
+      <view class="form-group">
+        <text class="label">API 类型</text>
+        <picker bindchange="onApiTypeChange" value="{{apiTypeIndex}}" range="{{apiTypes}}">
+          <view class="picker-val">{{apiTypes[apiTypeIndex]}}</view>
+        </picker>
+      </view>
+
+      <view class="form-group">
+        <text class="label">Base URL</text>
+        <input class="input" value="{{config.baseUrl}}" placeholder="https://..." bindinput="onFieldChange" data-field="baseUrl"/>
+      </view>
+
+      <view class="form-group">
+        <text class="label">API Key</text>
+        <input class="input" type="password" value="{{config.apiKey}}" placeholder="sk-..." bindinput="onFieldChange" data-field="apiKey"/>
+      </view>
+
+      <view class="form-group">
+        <text class="label">模型名称</text>
+        <input class="input" value="{{config.modelName}}" placeholder="mimo-orbit" bindinput="onFieldChange" data-field="modelName"/>
+      </view>
+
+      <view class="form-group">
+        <text class="label">System Prompt</text>
+        <textarea class="textarea" value="{{config.systemPrompt}}" placeholder="输入系统提示词" bindinput="onFieldChange" data-field="systemPrompt" auto-height maxlength="5000"/>
+      </view>
+
+      <!-- 快速填入 -->
+      <view class="presets">
+        <text class="label">快速填入</text>
+        <view class="preset-row">
+          <button class="preset-btn" bindtap="applyPreset" data-preset="mimo">MiMo</button>
+          <button class="preset-btn" bindtap="applyPreset" data-preset="openai">OpenAI</button>
+          <button class="preset-btn" bindtap="applyPreset" data-preset="deepseek">DeepSeek</button>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+
+      <view class="form-group">
+        <text class="label">管理密码</text>
+        <input class="input" value="{{config.adminPwd}}" placeholder="至少4位" bindinput="onFieldChange" data-field="adminPwd"/>
+      </view>
+
+      <view class="btn-row">
+        <button class="btn-ghost" bindtap="resetConfig">恢复默认</button>
+        <button class="btn-primary" bindtap="saveConfig">保存</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>

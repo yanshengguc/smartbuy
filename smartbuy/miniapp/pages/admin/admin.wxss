@@ -1,0 +1,47 @@
+.admin-page { height: 100vh; background: #f5f5f5; }
+.admin-form { padding: 20px 16px; }
+
+.pwd-section { text-align: center; padding-top: 60px; }
+.section-title { font-size: 18px; font-weight: 600; display: block; margin-bottom: 4px; }
+.section-desc { font-size: 13px; color: #999; display: block; margin-bottom: 20px; }
+.pwd-input {
+  text-align: center; font-size: 20px; letter-spacing: 8px;
+  padding: 12px; background: #fff; border-radius: 10px; margin-bottom: 20px;
+}
+
+.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+
+.form-group { margin-bottom: 14px; }
+.label { font-size: 12px; color: #999; display: block; margin-bottom: 4px; }
+.input, .textarea {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #e5e5e5;
+}
+.textarea { min-height: 80px; width: 100%; box-sizing: border-box; }
+.picker-val {
+  background: #fff; border: 1px solid #e5e5e5; border-radius: 8px;
+  padding: 10px 12px; font-size: 14px; color: #333;
+}
+
+.presets { margin-bottom: 14px; }
+.preset-row { display: flex; gap: 8px; }
+.preset-btn {
+  flex: 1; font-size: 12px;
+  background: #fff; border: 1px solid #e5e5e5; border-radius: 8px;
+}
+
+.divider { height: 1px; background: #e5e5e5; margin: 16px 0; }
+
+.btn-row { display: flex; gap: 10px; margin-top: 20px; }
+.btn-primary {
+  flex: 1; background: #ff6900; color: #fff;
+  border-radius: 8px; font-size: 14px;
+}
+.btn-ghost {
+  flex: 1; background: #fff; border: 1px solid #e5e5e5;
+  border-radius: 8px; font-size: 14px; color: #666;
+}
+.small { flex: 0; padding: 4px 12px; font-size: 12px; }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智选助手 - SmartBuy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- 顶部栏 -->
+        <header class="header">
+            <h1 id="title" title="">智选助手</h1>
+            <span class="subtitle">SmartBuy Assistant</span>
+        </header>
+
+        <!-- 聊天区域 -->
+        <div class="chat-area" id="chatArea">
+            <!-- 未配置引导 -->
+            <div class="guide-msg" id="guideMsg">
+                <div class="guide-icon">🛒</div>
+                <h2>购物决策，不再纠结</h2>
+                <p>告诉我你的预算、需求和纠结的产品，我帮你对比分析。</p>
+                <p class="guide-tip">⚠ 请管理员先配置 API</p>
+                <button class="guide-admin-btn" id="guideAdminBtn">进入管理端</button>
+            </div>
+            <!-- 欢迎消息 -->
+            <div class="welcome-msg" id="welcomeMsg">
+                <div class="welcome-icon">🛒</div>
+                <h2>购物决策，不再纠结</h2>
+                <p>告诉我你的预算、需求和纠结的产品，我帮你对比分析。</p>
+                <div class="example-prompts">
+                    <span>试试这样问：</span>
+                    <button class="example-btn">预算3500，玩原神+拍照，小米14和iQOO Neo9怎么选？</button>
+                    <button class="example-btn">3000元以内，冰箱选海尔还是美的？静音和省电哪个更重要？</button>
+                </div>
+            </div>
+            <div class="messages" id="messages"></div>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="input-area" id="inputArea">
+            <div class="input-row">
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" src="" alt="">
+                    <button id="removeImage" class="remove-image" title="移除图片">✕</button>
+                </div>
+                <textarea id="userInput" rows="1" placeholder="输入你的购物问题...（发送 Enter，换行 Shift+Enter）"></textarea>
+            </div>
+            <div class="input-actions">
+                <input type="file" id="imageInput" accept="image/*" hidden>
+                <button id="uploadBtn" class="upload-btn" title="上传图片">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </button>
+                <button id="sendBtn" class="send-btn" disabled>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Toast 提示 -->
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <!-- ====== 管理端弹窗 ====== -->
+
+    <!-- 密码验证弹窗 -->
+    <div class="modal-overlay" id="pwdOverlay">
+        <div class="modal">
+            <h3>管理端登录</h3>
+            <p class="modal-desc">请输入管理密码以进入设置</p>
+            <input type="password" id="pwdInput" placeholder="请输入密码" maxlength="20" autocomplete="off">
+            <div class="modal-actions">
+                <button class="btn-ghost" id="pwdCancel">取消</button>
+                <button class="btn-primary" id="pwdConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理端设置弹窗 -->
+    <div class="modal-overlay" id="adminOverlay">
+        <div class="modal modal-admin">
+            <div class="admin-header">
+                <h3>管理端设置</h3>
+                <button class="btn-ghost" id="adminLogout">退出管理端</button>
+            </div>
+            <div class="admin-body">
+                <label>API 类型</label>
+                <select id="apiType">
+                    <option value="openai">OpenAI 兼容</option>
+                    <option value="anthropic">Anthropic 兼容</option>
+                </select>
+                <label>Base URL</label>
+                <input type="text" id="baseUrl" list="baseUrlList" placeholder="选择或输入 Base URL" autocomplete="off">
+                <datalist id="baseUrlList"></datalist>
+                <label>API Key</label>
+                <input type="password" id="apiKey" placeholder="sk-...">
+                <label>模型名称</label>
+                <input type="text" id="modelName" list="modelNameList" placeholder="选择或输入模型名称" autocomplete="off">
+                <datalist id="modelNameList"></datalist>
+                <label>System Prompt（可自定义）</label>
+                <textarea id="systemPrompt" rows="6"></textarea>
+                <div class="preset-buttons">
+                    <span class="preset-label">快速填入：</span>
+                    <button class="btn-preset" data-preset="mimo">MiMo</button>
+                    <button class="btn-preset" data-preset="openai">OpenAI</button>
+                    <button class="btn-preset" data-preset="anthropic">Anthropic</button>
+                </div>
+                <hr>
+                <label>管理密码</label>
+                <input type="text" id="adminPwd" placeholder="修改管理端密码（至少4位）" maxlength="20" autocomplete="off">
+            </div>
+            <div class="share-section">
+                <label>分享用户端</label>
+                <div class="share-row">
+                    <input type="text" id="shareLink" readonly placeholder="保存设置后生成链接...">
+                    <button class="btn-primary btn-sm" id="copyLink">复制链接</button>
+                </div>
+                <span class="share-hint">保存设置后点击生成，把链接发给用户即可直接使用</span>
+            </div>
+            <div class="admin-footer">
+                <button class="btn-ghost" id="adminReset">恢复默认</button>
+                <button class="btn-primary" id="adminSave">保存并退出</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

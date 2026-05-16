@@ -1,0 +1,69 @@
+<view class="app">
+  <!-- 顶部栏 -->
+  <view class="header">
+    <text class="title" bindtap="onTitleTap">智选助手</text>
+    <text class="subtitle">SmartBuy</text>
+  </view>
+
+  <!-- 聊天区域 -->
+  <scroll-view class="chat-area" scroll-y scroll-into-view="{{scrollTo}}" scroll-with-animation>
+    <!-- 未配置引导 -->
+    <view class="guide-msg" wx:if="{{!configured}}">
+      <view class="guide-icon">🛒</view>
+      <text class="guide-title">购物决策，不再纠结</text>
+      <text class="guide-desc">告诉我你的预算、需求和纠结的产品，我帮你对比分析</text>
+      <view class="guide-tip">⚠ 请管理员先配置 API</view>
+      <button class="guide-btn" bindtap="goAdmin">进入管理端</button>
+    </view>
+
+    <!-- 欢迎消息 -->
+    <view class="welcome-msg" wx:if="{{configured && messages.length === 0}}">
+      <view class="guide-icon">🛒</view>
+      <text class="guide-title">购物决策，不再纠结</text>
+      <text class="guide-desc">告诉我你的预算、需求和纠结的产品</text>
+      <view class="examples">
+        <button class="example-btn" data-text="预算3500，玩原神+拍照，小米14和iQOO Neo9怎么选？" bindtap="useExample">预算3500，玩原神+拍照，小米14和iQOO Neo9怎么选？</button>
+        <button class="example-btn" data-text="3000元以内，冰箱选海尔还是美的？" bindtap="useExample">3000元以内，冰箱选海尔还是美的？</button>
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <view wx:for="{{messages}}" wx:key="id" wx:for-item="m" class="msg-row {{m.role === 'user' ? 'msg-user' : 'msg-ai'}}" id="msg-{{m.id}}">
+      <view class="avatar">{{m.role === 'user' ? '我' : 'AI'}}</view>
+      <view class="bubble {{m.role === 'user' ? 'bubble-user' : 'bubble-ai'}}">
+        <image wx:if="{{m.image}}" src="{{m.image}}" mode="widthFix" class="msg-image"></image>
+        <rich-text wx:if="{{m.role === 'assistant'}}" nodes="{{m.htmlContent}}"></rich-text>
+        <text wx:else>{{m.content}}</text>
+      </view>
+    </view>
+
+    <!-- 加载动画 -->
+    <view class="msg-row msg-ai" wx:if="{{loading}}">
+      <view class="avatar">AI</view>
+      <view class="bubble bubble-ai">
+        <view class="typing-dots">
+          <view></view><view></view><view></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area" wx:if="{{configured}}">
+    <view class="image-preview" wx:if="{{previewImage}}">
+      <image src="{{previewImage}}" mode="aspectFill"></image>
+      <view class="remove-img" bindtap="removeImage">✕</view>
+    </view>
+    <view class="input-row">
+      <input class="chat-input" value="{{inputText}}" placeholder="输入购物问题..." bindinput="onInput" bindconfirm="send" confirm-type="send" adjust-position="{{true}}" maxlength="2000"/>
+      <view class="input-btns">
+        <button class="btn-upload" bindtap="chooseImage">
+          <text>🖼</text>
+        </button>
+        <button class="btn-send {{inputText || previewImage ? 'btn-send--active' : ''}}" bindtap="send" disabled="{{!inputText && !previewImage}}">
+          <text>↑</text>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

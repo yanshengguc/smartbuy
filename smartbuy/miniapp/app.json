@@ -1,0 +1,13 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "navigationBarTitleText": "智选助手",
+    "navigationBarBackgroundColor": "#ff6900",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
